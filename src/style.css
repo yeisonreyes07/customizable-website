@@ -1,0 +1,479 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Variables CSS globales para el tema */
+:root {
+  --bg-color: #ffffff;
+  --text-color: #1f2937;
+  --header-bg: #f8fafc;
+  --header-text: #1f2937;
+  --content-title: #3b82f6;
+  --content-text: #4b5563;
+  --footer-bg: #1f2937;
+  --footer-text: #f9fafb;
+}
+
+/* Aplicar tema global como fallback */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Personalización de Toastification */
+:root {
+  --toastify-color-success: #10b981;
+  --toastify-color-error: #ef4444;
+  --toastify-color-warning: #f59e0b;
+  --toastify-color-info: #3b82f6;
+  --toastify-toast-width: 350px;
+  --toastify-toast-min-height: 64px;
+  --toastify-font-family: inherit;
+  --toastify-z-index: 1500;
+  --toastify-toast-border-radius: 0.75rem;
+}
+
+/* Estilo personalizado para los toasts */
+.Vue-Toastification__toast {
+  border-radius: 0.75rem;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  font-weight: 500;
+  font-size: 0.95rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.Vue-Toastification__toast--success {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border-left: 4px solid #047857;
+}
+
+.Vue-Toastification__toast--error {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  border-left: 4px solid #b91c1c;
+}
+
+.Vue-Toastification__toast--warning {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  border-left: 4px solid #b45309;
+}
+
+.Vue-Toastification__toast--info {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  border-left: 4px solid #1d4ed8;
+}
+
+/* Iconos y contenido del toast */
+.Vue-Toastification__toast-body {
+  padding: 0.5rem 0;
+  line-height: 1.4;
+}
+
+/* Botón de cerrar */
+.Vue-Toastification__close-button {
+  opacity: 0.8;
+  font-size: 1.2rem;
+  font-weight: bold;
+  transition: opacity 0.2s;
+}
+
+.Vue-Toastification__close-button:hover {
+  opacity: 1;
+}
+
+/* Barra de progreso */
+.Vue-Toastification__progress-bar {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+/* Animaciones mejoradas */
+.Vue-Toastification__bounce-enter-active {
+  animation: Vue-Toastification__bounceIn 0.5s both;
+}
+
+.Vue-Toastification__bounce-leave-active {
+  animation: Vue-Toastification__bounceOut 0.5s both;
+}
+
+@keyframes Vue-Toastification__bounceIn {
+  from,
+  20%,
+  40%,
+  60%,
+  80%,
+  to {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  0% {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3) translateX(100px);
+  }
+  20% {
+    transform: scale3d(1.1, 1.1, 1.1) translateX(-10px);
+  }
+  40% {
+    transform: scale3d(0.9, 0.9, 0.9) translateX(5px);
+  }
+  60% {
+    opacity: 1;
+    transform: scale3d(1.03, 1.03, 1.03) translateX(-2px);
+  }
+  80% {
+    transform: scale3d(0.97, 0.97, 0.97) translateX(1px);
+  }
+  to {
+    opacity: 1;
+    transform: scale3d(1, 1, 1) translateX(0px);
+  }
+}
+
+@keyframes Vue-Toastification__bounceOut {
+  20% {
+    transform: scale3d(0.9, 0.9, 0.9) translateX(-10px);
+  }
+  50%,
+  55% {
+    opacity: 1;
+    transform: scale3d(1.1, 1.1, 1.1) translateX(10px);
+  }
+  to {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3) translateX(100px);
+  }
+}
+
+/* Clases utilitarias para aplicar tema */
+.theme-bg {
+  background-color: var(--bg-color) !important;
+}
+
+.theme-text {
+  color: var(--text-color) !important;
+}
+
+.theme-header-bg {
+  background-color: var(--header-bg) !important;
+}
+
+.theme-header-text {
+  color: var(--header-text) !important;
+}
+
+.theme-content-title {
+  color: var(--content-title) !important;
+}
+
+.theme-content-text {
+  color: var(--content-text) !important;
+}
+
+.theme-footer-bg {
+  background-color: var(--footer-bg) !important;
+}
+
+.theme-footer-text {
+  color: var(--footer-text) !important;
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #111827;
+    background-color: #f9fafb;
+  }
+
+  /* Mejorar la visualización de iconos SVG */
+  svg {
+    display: inline-block;
+  }
+}
+
+@layer components {
+  .btn {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: all 0.2s;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    user-select: none;
+  }
+  
+  .btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+  
+  .btn:focus {
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+  }
+  
+  .btn-primary {
+    background-color: #2563eb;
+    color: white;
+  }
+  
+  .btn-primary:hover {
+    background-color: #1d4ed8;
+  }
+  
+  .btn-secondary {
+    background-color: #e5e7eb;
+    color: #111827;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #d1d5db;
+  }
+  
+  .btn-success {
+    background-color: #059669;
+    color: white;
+  }
+  
+  .btn-success:hover {
+    background-color: #047857;
+  }
+  
+  .btn-danger {
+    background-color: #dc2626;
+    color: white;
+  }
+  
+  .btn-danger:hover {
+    background-color: #b91c1c;
+  }
+  
+  .input-field {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    outline: none;
+    transition: all 0.2s;
+  }
+  
+  .input-field:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+  }
+  
+  .color-input {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 0.5rem;
+    border: 2px solid #d1d5db;
+    cursor: pointer;
+    transition: all 0.2s;
+    outline: none;
+    background: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+  
+  .color-input:hover {
+    transform: scale(1.05);
+  }
+  
+  .color-input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+  }
+  
+  .panel-section {
+    background-color: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e7eb;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    transition: all 0.2s;
+  }
+  
+  .panel-section:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .panel-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .panel-title svg {
+    flex-shrink: 0;
+  }
+  
+  .color-preview {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.5rem;
+    border: 2px solid #d1d5db;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .color-preview:hover {
+    transform: scale(1.1);
+  }
+  
+  .gradient-bg {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+  
+  .glass-effect {
+    backdrop-filter: blur(4px);
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  .floating-card {
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid #f3f4f6;
+    padding: 1.5rem;
+  }
+  
+  .animated-border {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .animated-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, #60a5fa, #3b82f6);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .animated-border:hover::before {
+    opacity: 0.1;
+  }
+
+  /* Mejorar iconos en botones */
+  .btn svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  /* Mejorar iconos en títulos */
+  .panel-title svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: #2563eb;
+  }
+
+  /* Mejorar iconos en cards */
+  .floating-card svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  /* Mejorar iconos en notificaciones */
+  .notification-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    flex-shrink: 0;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(to right, #2563eb, #7c3aed);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .shadow-glow {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+  }
+  
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Utilidades para iconos */
+  .icon-sm {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .icon-md {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .icon-lg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .icon-xl {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+/* Animaciones personalizadas */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.8);
+  }
+}
+
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Responsive design mejorado */
+@media (max-width: 768px) {
+  .mobile-panel {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    background-color: white;
+    transform: translateX(-100%);
+    transition: transform 0.3s;
+  }
+  
+  .mobile-panel.closed {
+    transform: translateX(-100%);
+  }
+  
+  .mobile-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 40;
+  }
+} 
