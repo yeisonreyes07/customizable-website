@@ -1,6 +1,5 @@
 <template>
   <div id="app" class="app-container">
-    <!-- Boton para abrir modal (abajo derecha) -->
     <button 
       v-if="!showThemeModal"
       @click="openThemeModal"
@@ -10,7 +9,6 @@
       <MaterialIcon :icon="mdiPalette" size="md" />
     </button>
 
-    <!-- Modal del Personalizador -->
     <div 
       v-if="showThemeModal"
       class="theme-modal-overlay"
@@ -37,7 +35,8 @@
         <div class="theme-modal-content">
                 <ThemePanel 
         :theme="theme" 
-        @update-theme="updateTheme"
+        @update-theme="updateThemeOnly"
+        @update-theme-with-validation="updateTheme"
         @save-theme="saveTheme"
         @load-theme="loadTheme"
         @notification="showNotification"
@@ -85,14 +84,13 @@ export default {
       logoUrl: '/images/logo.gif'
     })
 
-    const showThemeModal = ref(true) // Por defecto abierto
+    const showThemeModal = ref(true)
     const toast = useToast()
 
 
     const normalizeColor = (color) => {
       if (!color) return ''
       
-
       if (color.startsWith('data:') || color.startsWith('/') || color.startsWith('http')) {
         return color
       }
@@ -116,9 +114,8 @@ export default {
       const errors = {}
       
       Object.keys(themeData).forEach(key => {
-
         if (key === 'logoUrl') {
-          return // Skip logoUrl validation
+          return
         }
         
         const normalizedColor = normalizeColor(themeData[key])
@@ -130,30 +127,38 @@ export default {
       return Object.keys(errors).length === 0
     }
 
+    const updateThemeOnly = (newTheme) => {
+      try {
+        const normalizedTheme = {}
+        Object.keys(newTheme).forEach(key => {
+          if (key === 'logoUrl') {
+            normalizedTheme[key] = newTheme[key]
+          } else {
+            normalizedTheme[key] = normalizeColor(newTheme[key])
+          }
+        })
+        
+        theme.value = { ...normalizedTheme }
+        applyGlobalTheme(normalizedTheme)
+      } catch (error) {
+        console.error('Error al actualizar tema:', error)
+      }
+    }
+
     const updateTheme = (newTheme) => {
       try {
-        console.log('Actualizando tema:', newTheme)
-
         if (validateTheme(newTheme)) {
-
           const normalizedTheme = {}
           Object.keys(newTheme).forEach(key => {
             if (key === 'logoUrl') {
-  
               normalizedTheme[key] = newTheme[key]
             } else {
-  
               normalizedTheme[key] = normalizeColor(newTheme[key])
             }
           })
           
-
           theme.value = { ...normalizedTheme }
-          
-
           applyGlobalTheme(normalizedTheme)
-          
-          console.log('Tema actualizado exitosamente:', normalizedTheme)
         } else {
           showNotification('Error', 'Algunos colores son inválidos', 'error')
         }
@@ -166,7 +171,6 @@ export default {
     const saveTheme = () => {
       try {
         if (validateTheme(theme.value)) {
-    
           showNotification('Éxito', 'Tema guardado correctamente', 'success')
         } else {
           showNotification('Error', 'El tema contiene colores inválidos', 'error')
@@ -178,7 +182,6 @@ export default {
 
     const loadTheme = () => {
       try {
-  
         if (validateTheme(theme.value)) {
           showNotification('Éxito', 'Tema cargado correctamente', 'success')
         } else {
@@ -224,7 +227,6 @@ export default {
       try {
         const root = document.documentElement
         
-  
         root.style.setProperty('--bg-color', themeData.backgroundColor || '#ffffff')
         root.style.setProperty('--text-color', themeData.textColor || '#1f2937')
         root.style.setProperty('--header-bg', themeData.headerBackground || '#f8fafc')
@@ -233,24 +235,18 @@ export default {
         root.style.setProperty('--content-text', themeData.contentTextColor || '#4b5563')
         root.style.setProperty('--footer-bg', themeData.footerBackground || '#1f2937')
         root.style.setProperty('--footer-text', themeData.footerTextColor || '#f9fafb')
-        
-        console.log('Variables CSS aplicadas:', themeData)
+
       } catch (error) {
         console.error('Error aplicando variables CSS:', error)
       }
     }
 
-    
     onMounted(() => {
-      console.log('Componente App montado, tema inicial:', theme.value)
-      
       if (theme.value && Object.keys(theme.value).length > 0) {
         if (validateTheme(theme.value)) {
-          console.log('Tema cargado exitosamente')
           applyGlobalTheme(theme.value)
         } else {
           console.warn('Tema con colores inválidos detectado, restableciendo...')
-  
           const defaultTheme = {
             backgroundColor: '#ffffff',
             textColor: '#1f2937',
@@ -265,7 +261,6 @@ export default {
           applyGlobalTheme(defaultTheme)
         }
       } else {
-  
         const defaultTheme = {
           backgroundColor: '#ffffff',
           textColor: '#1f2937',
@@ -294,12 +289,12 @@ export default {
       theme,
       showThemeModal,
       updateTheme,
+      updateThemeOnly,
       saveTheme,
       loadTheme,
       openThemeModal,
       closeThemeModal,
       applyGlobalTheme,
-  
       mdiPalette,
       mdiClose
     }
@@ -314,7 +309,6 @@ export default {
   position: relative;
 }
 
-/* Botón flotante para abrir el modal */
 .theme-modal-trigger {
   position: fixed;
   bottom: 1rem;
@@ -339,7 +333,6 @@ export default {
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
 }
 
-/* Overlay del modal */
 .theme-modal-overlay {
   position: fixed;
   top: 0;
@@ -354,7 +347,6 @@ export default {
   padding: 1rem;
 }
 
-/* Modal del personalizador */
 .theme-modal {
   background: white;
   border-radius: 1rem;
@@ -377,7 +369,6 @@ export default {
   }
 }
 
-/* Header del modal */
 .theme-modal-header {
   display: flex;
   align-items: center;
@@ -411,7 +402,6 @@ export default {
   transform: scale(1.1);
 }
 
-/* Contenido del modal */
 .theme-modal-content {
   max-height: calc(95vh - 4rem);
   overflow-y: auto;
@@ -436,14 +426,11 @@ export default {
   background: #94a3b8;
 }
 
-/* Contenido principal sin margen */
 .main-content.full-width {
   margin-left: 0;
 }
 
 
-
-/* Responsive para el modal */
 @media (max-width: 768px) {
   .theme-modal {
     max-width: 95%;

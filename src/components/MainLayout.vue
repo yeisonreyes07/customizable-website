@@ -1,6 +1,5 @@
 <template>
   <div class="main-layout" :style="mainStyles">
-    <!-- Header -->
     <header class="main-header" :style="headerStyles">
       <div class="header-overlay"></div>
       <div class="header-content">
@@ -14,7 +13,6 @@
           />
         </div>
         <div class="header-text">
-          
           <h1 class="header-title" :style="headerTextStyles">
             Sistema de Personalización de Temas
           </h1>
@@ -25,12 +23,8 @@
       </div>
     </header>
 
-    <!-- Contenido Principal -->
     <main class="main-content">
       <div class="content-container">
-      
-
-        <!-- Sobre este proyecto -->
         <div class="about-section">
           <h2 class="section-title" :style="contentTitleStyles">
             ¿Qué puedes hacer aquí?
@@ -39,7 +33,7 @@
           <div class="about-grid">
             <div class="about-column">
               <h3 class="about-subtitle" :style="contentTitleStyles">
-                🎨 Explora y experimenta
+                Explora y experimenta
               </h3>
               <div class="about-content" :style="contentTextStyles">
                 <p>Este es un espacio donde puedes jugar con diferentes combinaciones de colores y ver cómo transforman completamente la apariencia de una aplicación web.</p>
@@ -49,7 +43,7 @@
 
             <div class="about-column">
               <h3 class="about-subtitle" :style="contentTitleStyles">
-                💾 Guarda tus creaciones
+                Guarda tus creaciones
               </h3>
               <div class="about-content" :style="contentTextStyles">
                 <p>Cuando encuentres una combinación que te encante, puedes guardarla y volverá a cargar automáticamente la próxima vez que visites la página.</p>
@@ -59,11 +53,10 @@
           </div>
         </div>
 
-        <!-- Cómo empezar -->
         <div class="getting-started-section">
           <div class="getting-started-card">
             <h3 class="getting-started-title" :style="contentTitleStyles">
-              🚀 Empezar es súper fácil
+              Empezar 
             </h3>
             
             <div class="steps-container" :style="contentTextStyles">
@@ -99,23 +92,20 @@
             </div>
 
             <div class="tip-box" :style="contentTextStyles">
-              <p><strong>💡 Tip:</strong> No tengas miedo de experimentar. Siempre puedes usar el botón "Restablecer" para volver a empezar.</p>
+              <p><strong>Tip:</strong> No tengas miedo de experimentar. Siempre puedes usar el botón "Restablecer" para volver a empezar.</p>
             </div>
           </div>
         </div>
       </div>
     </main>
 
-    <!-- Footer -->
     <footer class="main-footer" :style="footerStyles">
       <div class="footer-overlay"></div>
       <div class="footer-content">
         <div class="footer-text">
-         
           <p class="footer-description" :style="footerTextStyles">
             © 2025 Yeison Reyes - 2025 | Personaliza la apariencia de tu sitio web en tiempo real 
           </p>
-         
         </div>
       </div>
     </footer>
@@ -154,11 +144,9 @@ export default {
     }
   },
   setup(props) {
-
     const normalizeColor = (color) => {
       if (!color) return ''
       
-
       if (color.startsWith('data:') || color.startsWith('/') || color.startsWith('http')) {
         return color
       }
@@ -176,7 +164,6 @@ export default {
       return normalized
     }
 
-
     const mainStyles = computed(() => {
       const backgroundColor = normalizeColor(props.theme.backgroundColor) || '#ffffff'
       const textColor = normalizeColor(props.theme.textColor) || '#1f2937'
@@ -188,7 +175,6 @@ export default {
       }
     })
 
-
     const headerStyles = computed(() => {
       const backgroundColor = normalizeColor(props.theme.headerBackground) || '#f8fafc'
       
@@ -197,7 +183,6 @@ export default {
         transition: 'all 0.3s ease'
       }
     })
-
 
     const footerStyles = computed(() => {
       const backgroundColor = normalizeColor(props.theme.footerBackground) || '#1f2937'
@@ -208,7 +193,6 @@ export default {
       }
     })
 
-
     const headerTextStyles = computed(() => {
       const color = normalizeColor(props.theme.headerTextColor) || '#1f2937'
       
@@ -217,7 +201,6 @@ export default {
         transition: 'all 0.3s ease'
       }
     })
-
 
     const footerTextStyles = computed(() => {
       const color = normalizeColor(props.theme.footerTextColor) || '#f9fafb'
@@ -228,17 +211,14 @@ export default {
       }
     })
 
-
     const logoSrc = computed(() => {
       const logo = props.theme.logoUrl
       
-
       if (!logo || logo.trim() === '') {
         console.warn('Logo URL está vacío, usando logo por defecto')
         return '/images/logo.gif'
       }
       
-
       if (logo.startsWith('data:')) {
         if (!logo.includes('image/') || !logo.includes('base64,')) {
           console.warn('Formato de imagen base64 inválido, usando logo por defecto')
@@ -249,28 +229,22 @@ export default {
       return logo
     })
 
-
     const handleLogoError = (event) => {
       console.error('Error cargando logo:', props.theme.logoUrl)
       
-
       if (event.target.src !== '/images/logo.gif') {
         console.log('Fallback al logo por defecto')
         event.target.src = '/images/logo.gif'
       } else {
         console.error('Error cargando incluso el logo por defecto')
-
         event.target.style.display = 'none'
       }
     }
 
-
     const handleLogoLoad = (event) => {
       console.log('Logo cargado exitosamente:', event.target.src)
-
       event.target.style.display = 'block'
     }
-
 
     const contentTitleStyles = computed(() => {
       const color = normalizeColor(props.theme.contentTitleColor) || '#3b82f6'
@@ -281,7 +255,6 @@ export default {
       }
     })
 
-
     const contentTextStyles = computed(() => {
       const color = normalizeColor(props.theme.contentTextColor) || '#4b5563'
       
@@ -290,7 +263,6 @@ export default {
         transition: 'all 0.3s ease'
       }
     })
-
 
     watch(() => props.theme, (newTheme) => {
       if (newTheme) {
@@ -309,7 +281,6 @@ export default {
       logoSrc,
       handleLogoError,
       handleLogoLoad,
-  
       mdiPalette,
       mdiLightningBolt,
       mdiHeart,
@@ -377,7 +348,6 @@ export default {
   filter: brightness(1.2);
 }
 
-/* Estados del logo */
 .main-logo {
   display: block;
   transition: all 0.3s ease, opacity 0.2s ease;
@@ -388,7 +358,6 @@ export default {
   transform: scale(0.9);
 }
 
-/* Fallback cuando hay error de carga */
 .header-logo-section:has(.main-logo[style*="display: none"])::before {
   content: "📷";
   font-size: 3rem;

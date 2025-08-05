@@ -1,9 +1,6 @@
 <template>
   <div :class="['theme-panel', { 'theme-panel-compact': compact }]">
-
-    <!-- Contenido del Panel -->
-    <div :class="['panel-content', { 'panel-content-compact': compact }]">
-      <!-- Logo Personalizado -->
+    <div :class="['panel-content', { 'panel-content-compact': compact }]"> 
       <div class="panel-section animated-border">
         <div class="panel-title">
           <MaterialIcon :icon="mdiImageEdit" size="md" />
@@ -50,7 +47,6 @@
         </div>
       </div>
 
-      <!-- Estilos Globales -->
       <div class="panel-section animated-border">
         <div class="panel-title">
           <MaterialIcon :icon="mdiPalette" size="md" />
@@ -70,10 +66,17 @@
               <input 
                 type="text" 
                 v-model="localTheme.backgroundColor"
-                @input.stop="updateGlobalTheme"
+                @input="handleColorInput('backgroundColor', $event)"
+                @paste="handleColorPaste('backgroundColor', $event)"
+                @blur="validateAndUpdate('backgroundColor')"
                 placeholder="#ffffff"
                 class="text-input"
                 :class="{ 'error': errors.backgroundColor }"
+                autocomplete="new-password"
+                spellcheck="false"
+                autocorrect="off"
+                autocapitalize="off"
+                data-form-type="other"
               />
             </div>
             <span v-if="errors.backgroundColor" class="error-message">{{ errors.backgroundColor }}</span>
@@ -91,10 +94,17 @@
               <input 
                 type="text" 
                 v-model="localTheme.textColor"
-                @input="updateGlobalTheme"
+                @input="handleColorInput('textColor', $event)"
+                @paste="handleColorPaste('textColor', $event)"
+                @blur="validateAndUpdate('textColor')"
                 placeholder="#1f2937"
                 class="text-input"
                 :class="{ 'error': errors.textColor }"
+                autocomplete="new-password"
+                spellcheck="false"
+                autocorrect="off"
+                autocapitalize="off"
+                data-form-type="other"
               />
             </div>
             <span v-if="errors.textColor" class="error-message">{{ errors.textColor }}</span>
@@ -102,7 +112,6 @@
         </div>
       </div>
 
-      <!-- Estilos del Header -->
       <div class="panel-section animated-border">
         <div class="panel-title">
           <MaterialIcon :icon="mdiPalette" size="md" />
@@ -122,10 +131,17 @@
               <input 
                 type="text" 
                 v-model="localTheme.headerBackground"
-                @input="updateGlobalTheme"
+                @input="handleColorInput('headerBackground', $event)"
+                @paste="handleColorPaste('headerBackground', $event)"
+                @blur="validateAndUpdate('headerBackground')"
                 placeholder="#f8fafc"
                 class="text-input"
                 :class="{ 'error': errors.headerBackground }"
+                autocomplete="new-password"
+                spellcheck="false"
+                autocorrect="off"
+                autocapitalize="off"
+                data-form-type="other"
               />
             </div>
             <span v-if="errors.headerBackground" class="error-message">{{ errors.headerBackground }}</span>
@@ -143,10 +159,17 @@
               <input 
                 type="text" 
                 v-model="localTheme.headerTextColor"
-                @input="updateGlobalTheme"
+                @input="handleColorInput('headerTextColor', $event)"
+                @paste="handleColorPaste('headerTextColor', $event)"
+                @blur="validateAndUpdate('headerTextColor')"
                 placeholder="#1f2937"
                 class="text-input"
                 :class="{ 'error': errors.headerTextColor }"
+                autocomplete="new-password"
+                spellcheck="false"
+                autocorrect="off"
+                autocapitalize="off"
+                data-form-type="other"
               />
             </div>
             <span v-if="errors.headerTextColor" class="error-message">{{ errors.headerTextColor }}</span>
@@ -154,7 +177,6 @@
         </div>
       </div>
 
-      <!-- Estilos del Contenido -->
       <div class="panel-section animated-border">
         <div class="panel-title">
           <MaterialIcon :icon="mdiPalette" size="md" />
@@ -174,10 +196,17 @@
               <input 
                 type="text" 
                 v-model="localTheme.contentTitleColor"
-                @input="updateGlobalTheme"
+                @input="handleColorInput('contentTitleColor', $event)"
+                @paste="handleColorPaste('contentTitleColor', $event)"
+                @blur="validateAndUpdate('contentTitleColor')"
                 placeholder="#3b82f6"
                 class="text-input"
                 :class="{ 'error': errors.contentTitleColor }"
+                autocomplete="new-password"
+                spellcheck="false"
+                autocorrect="off"
+                autocapitalize="off"
+                data-form-type="other"
               />
             </div>
             <span v-if="errors.contentTitleColor" class="error-message">{{ errors.contentTitleColor }}</span>
@@ -195,10 +224,17 @@
               <input 
                 type="text" 
                 v-model="localTheme.contentTextColor"
-                @input="updateGlobalTheme"
+                @input="handleColorInput('contentTextColor', $event)"
+                @paste="handleColorPaste('contentTextColor', $event)"
+                @blur="validateAndUpdate('contentTextColor')"
                 placeholder="#4b5563"
                 class="text-input"
                 :class="{ 'error': errors.contentTextColor }"
+                autocomplete="new-password"
+                spellcheck="false"
+                autocorrect="off"
+                autocapitalize="off"
+                data-form-type="other"
               />
             </div>
             <span v-if="errors.contentTextColor" class="error-message">{{ errors.contentTextColor }}</span>
@@ -206,7 +242,6 @@
         </div>
       </div>
 
-      <!-- Estilos del Footer -->
       <div class="panel-section animated-border">
         <div class="panel-title">
           <MaterialIcon :icon="mdiPalette" size="md" />
@@ -226,10 +261,17 @@
               <input 
                 type="text" 
                 v-model="localTheme.footerBackground"
-                @input="updateGlobalTheme"
+                @input="handleColorInput('footerBackground', $event)"
+                @paste="handleColorPaste('footerBackground', $event)"
+                @blur="validateAndUpdate('footerBackground')"
                 placeholder="#1f2937"
                 class="text-input"
                 :class="{ 'error': errors.footerBackground }"
+                autocomplete="new-password"
+                spellcheck="false"
+                autocorrect="off"
+                autocapitalize="off"
+                data-form-type="other"
               />
             </div>
             <span v-if="errors.footerBackground" class="error-message">{{ errors.footerBackground }}</span>
@@ -247,10 +289,17 @@
               <input 
                 type="text" 
                 v-model="localTheme.footerTextColor"
-                @input="updateGlobalTheme"
+                @input="handleColorInput('footerTextColor', $event)"
+                @paste="handleColorPaste('footerTextColor', $event)"
+                @blur="validateAndUpdate('footerTextColor')"
                 placeholder="#f9fafb"
                 class="text-input"
                 :class="{ 'error': errors.footerTextColor }"
+                autocomplete="new-password"
+                spellcheck="false"
+                autocorrect="off"
+                autocapitalize="off"
+                data-form-type="other"
               />
             </div>
             <span v-if="errors.footerTextColor" class="error-message">{{ errors.footerTextColor }}</span>
@@ -258,7 +307,6 @@
         </div>
       </div>
 
-      <!-- Acciones -->
       <div class="panel-section animated-border">
         <div class="panel-title">
           <MaterialIcon :icon="mdiTune" size="md" />
@@ -266,9 +314,7 @@
         </div>
         
         <div class="actions-container">
-      
-          
-                      <button 
+          <button 
               @click.stop="saveTheme" 
               class="btn btn-success action-btn"
               style="position: relative; z-index: 10;"
@@ -276,10 +322,7 @@
               <MaterialIcon :icon="mdiContentSaveOutline" size="md" />
               Guardar Tema
             </button>
-          
-        
-          
-                      <button 
+          <button 
               @click.stop="resetTheme" 
               class="btn btn-danger action-btn"
               style="position: relative; z-index: 10;"
@@ -290,7 +333,6 @@
         </div>
       </div>
 
-     
     </div>
   </div>
 </template>
@@ -300,10 +342,6 @@ import { ref, reactive, watch, onMounted, nextTick } from 'vue'
 import MaterialIcon from './MaterialIcon.vue'
 import { 
   mdiPalette,
-  mdiHeart,
-  mdiMenu,
-  mdiFileDocumentOutline,
-  mdiDomain,
   mdiTune,
   mdiContentSaveOutline,
   mdiRefresh,
@@ -327,7 +365,7 @@ export default {
       default: false
     }
   },
-  emits: ['update-theme', 'save-theme', 'load-theme', 'notification'],
+  emits: ['update-theme', 'update-theme-with-validation', 'save-theme', 'load-theme', 'notification'],
   setup(props, { emit }) {
     const defaultTheme = {
       backgroundColor: '#ffffff',
@@ -361,7 +399,53 @@ export default {
         normalized = '#' + normalized[1] + normalized[1] + normalized[2] + normalized[2] + normalized[3] + normalized[3]
       }
       
+      if (normalized.length === 5) {
+        normalized = normalized + '0'
+      }
+      
+      if (normalized.length < 7 && normalized.length > 4) {
+        normalized = normalized.padEnd(7, '0')
+      }
+      
       return normalized
+    }
+
+    const handleColorInput = (field, event) => {
+      let value = event.target.value
+      
+      if (value && !value.startsWith('#') && /^[0-9a-fA-F]+$/.test(value)) {
+        value = '#' + value
+        localTheme.value[field] = value
+        nextTick(() => {
+          event.target.value = value
+        })
+      }
+      
+      updateThemeOnly()
+    }
+
+    const handleColorPaste = (field, event) => {
+      event.preventDefault()
+      const pastedText = (event.clipboardData || window.clipboardData).getData('text')
+      let cleanColor = pastedText.trim()
+      
+      if (/^[0-9a-fA-F]{6}$/.test(cleanColor)) {
+        cleanColor = '#' + cleanColor
+      } else if (/^[0-9a-fA-F]{3}$/.test(cleanColor)) {
+        cleanColor = '#' + cleanColor
+      } else if (!cleanColor.startsWith('#')) {
+        cleanColor = '#' + cleanColor.replace(/[^0-9a-fA-F]/g, '')
+      }
+      
+      if (cleanColor.length > 7) {
+        cleanColor = cleanColor.substring(0, 7)
+      }
+      
+      localTheme.value[field] = cleanColor
+      event.target.value = cleanColor
+      
+      updateThemeOnly()
+      validateAndUpdate(field)
     }
 
     const validateColor = (field) => {
@@ -391,8 +475,6 @@ export default {
 
     const updateGlobalTheme = () => {
       try {
-        console.log('updateGlobalTheme llamado, localTheme:', localTheme.value)
-        
         const normalizedTheme = {}
         Object.keys(localTheme.value).forEach(field => {
           if (field === 'logoUrl') {
@@ -402,43 +484,69 @@ export default {
           }
         })
         
-        console.log('ThemePanel emitiendo tema:', normalizedTheme)
         emit('update-theme', normalizedTheme)
       } catch (error) {
         console.error('Error actualizando tema:', error)
       }
     }
 
-    
+    const updateThemeOnly = () => {
+      try {
+        const normalizedTheme = {}
+        Object.keys(localTheme.value).forEach(field => {
+          if (field === 'logoUrl') {
+            normalizedTheme[field] = localTheme.value[field]
+          } else {
+            normalizedTheme[field] = normalizeColor(localTheme.value[field]) || localTheme.value[field]
+          }
+        })
+        
+        emit('update-theme', normalizedTheme)
+      } catch (error) {
+        console.error('Error actualizando tema:', error)
+      }
+    }
+
+    const validateAndUpdate = (field) => {
+      validateColor(field)
+      
+      try {
+        const normalizedTheme = {}
+        Object.keys(localTheme.value).forEach(fieldKey => {
+          if (fieldKey === 'logoUrl') {
+            normalizedTheme[fieldKey] = localTheme.value[fieldKey]
+          } else {
+            normalizedTheme[fieldKey] = normalizeColor(localTheme.value[fieldKey]) || localTheme.value[fieldKey]
+          }
+        })
+        
+        emit('update-theme-with-validation', normalizedTheme)
+      } catch (error) {
+        console.error('Error actualizando tema con validación:', error)
+      }
+    }
+
     const saveTheme = () => {
-      console.log('Botón Guardar clickeado')
       try {
         emit('save-theme')
-        console.log('Evento save-theme emitido')
       } catch (error) {
         console.error('Error emitiendo save-theme:', error)
       }
     }
 
-
     const loadTheme = () => {
-      console.log('Botón Cargar clickeado')
       try {
         emit('load-theme')
-        console.log('Evento load-theme emitido')
       } catch (error) {
         console.error('Error emitiendo load-theme:', error)
       }
     }
 
-
     const resetTheme = () => {
-      console.log('Botón Restablecer clickeado')
       try {
         localTheme.value = { ...defaultTheme }
         Object.keys(errors).forEach(key => delete errors[key])
         updateGlobalTheme()
-        console.log('Tema restablecido exitosamente')
         emit('notification', 'Éxito', 'Tema y logo restablecidos completamente', 'success')
       } catch (error) {
         console.error('Error restableciendo tema:', error)
@@ -448,7 +556,6 @@ export default {
 
     watch(() => props.theme, (newTheme) => {
       if (newTheme && Object.keys(newTheme).length > 0) {
-        console.log('ThemePanel recibió nuevo tema:', newTheme)
         const normalizedTheme = {}
         Object.keys(newTheme).forEach(key => {
           if (key === 'logoUrl') {
@@ -483,12 +590,10 @@ export default {
       const file = event.target.files[0]
       if (!file) return
 
-
       if (file.size > 2 * 1024 * 1024) {
         emit('notification', 'Error', 'La imagen debe ser menor a 2MB', 'error')
         return
       }
-
 
       if (!file.type.startsWith('image/')) {
         emit('notification', 'Error', 'Por favor selecciona un archivo de imagen válido', 'error')
@@ -518,17 +623,16 @@ export default {
       errors,
       validateColor,
       updateGlobalTheme,
+      updateThemeOnly,
+      validateAndUpdate,
       saveTheme,
       loadTheme,
       resetTheme,
       handleLogoUpload,
       resetLogo,
-  
+      handleColorInput,
+      handleColorPaste,
       mdiPalette,
-      mdiHeart,
-      mdiMenu,
-      mdiFileDocumentOutline,
-      mdiDomain,
       mdiTune,
       mdiContentSaveOutline,
       mdiRefresh,
